@@ -1,13 +1,24 @@
 pluginManagement {
-	repositories {
-		gradlePluginPortal()
-		maven { url 'https://repo.spring.io/plugins-release' }
-	}
+    repositories {
+		maven { url 'https://maven.aliyun.com/repository/central' }
+		maven { url 'https://maven.aliyun.com/repository/public' }
+		maven { url 'https://maven.aliyun.com/repository/google' }
+		maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+		maven { url 'https://maven.aliyun.com/repository/spring' }
+		maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
+		maven { url 'https://maven.aliyun.com/repository/grails-core' }
+		maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter'}
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public'}
+
+        gradlePluginPortal()
+        maven { url 'https://repo.spring.io/plugins-release' }
+    }
 }
 
 plugins {
-	id "com.gradle.enterprise" version "3.2"
-	id "io.spring.gradle-enterprise-conventions" version "0.0.2"
+    id "com.gradle.enterprise" version "3.2"
+    id "io.spring.gradle-enterprise-conventions" version "0.0.2"
 }
 
 include "spring-aop"
@@ -38,27 +49,27 @@ include "framework-bom"
 include "integration-tests"
 
 rootProject.name = "spring"
-rootProject.children.each {project ->
-	project.buildFileName = "${project.name}.gradle"
+rootProject.children.each { project ->
+    project.buildFileName = "${project.name}.gradle"
 }
 
 settings.gradle.projectsLoaded {
-	gradleEnterprise {
-		buildScan {
-			if (settings.gradle.rootProject.hasProperty('customJavaHome')) {
-				value("Custom JAVA_HOME", settings.gradle.rootProject.getProperty('customJavaHome'))
-			}
-			if (settings.gradle.rootProject.hasProperty('customJavaSourceVersion')) {
-				value("Custom Java Source Version", settings.gradle.rootProject.getProperty('customJavaSourceVersion'))
-			}
-			File buildDir = settings.gradle.rootProject.getBuildDir()
-			buildDir.mkdirs()
-			new File(buildDir, "build-scan-uri.txt").text = "(build scan not generated)"
-			buildScanPublished { scan ->
-				if (buildDir.exists()) {
-					new File(buildDir, "build-scan-uri.txt").text = "${scan.buildScanUri}\n"
-				} 
-			}
-		}
-	}
+    gradleEnterprise {
+        buildScan {
+            if (settings.gradle.rootProject.hasProperty('customJavaHome')) {
+                value("Custom JAVA_HOME", settings.gradle.rootProject.getProperty('customJavaHome'))
+            }
+            if (settings.gradle.rootProject.hasProperty('customJavaSourceVersion')) {
+                value("Custom Java Source Version", settings.gradle.rootProject.getProperty('customJavaSourceVersion'))
+            }
+            File buildDir = settings.gradle.rootProject.getBuildDir()
+            buildDir.mkdirs()
+            new File(buildDir, "build-scan-uri.txt").text = "(build scan not generated)"
+            buildScanPublished { scan ->
+                if (buildDir.exists()) {
+                    new File(buildDir, "build-scan-uri.txt").text = "${scan.buildScanUri}\n"
+                }
+            }
+        }
+    }
 }
