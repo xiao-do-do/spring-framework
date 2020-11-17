@@ -1,4 +1,4 @@
-package org.springframework.beans.factory.xml;
+package org.springframework.beans.mytest;
 
 public  class MyTestBean{
 	private String testStr = "testStr";
